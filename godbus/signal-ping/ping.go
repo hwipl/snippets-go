@@ -6,6 +6,11 @@ import (
 	"github.com/godbus/dbus/v5"
 )
 
+const (
+	// object path
+	path  = "/org/ping/Ping"
+)
+
 func main() {
 	// connect to session bus
 	conn, err := dbus.ConnectSessionBus()
@@ -16,7 +21,7 @@ func main() {
 
 	// subscribe to specific signals
 	if err = conn.AddMatchSignal(
-		dbus.WithMatchObjectPath("/org/ping/Ping"),
+		dbus.WithMatchObjectPath(path),
 		dbus.WithMatchInterface("org.ping.Ping"),
 	); err != nil {
 		log.Fatal(err)
@@ -27,7 +32,7 @@ func main() {
 	conn.Signal(c)
 
 	// send ping request
-	conn.Emit("/org/ping/Ping", "org.ping.Ping.Ping", "PING")
+	conn.Emit(path, "org.ping.Ping.Ping", "PING")
 
 	// handle incoming signals
 	name := conn.Names()[0]
@@ -41,8 +46,7 @@ func main() {
 		case "org.ping.Ping.Ping":
 			// incoming ping request
 			log.Println("PING from", s.Sender)
-			conn.Emit("/org/ping/Ping", "org.ping.Ping.Pong",
-				"PONG")
+			conn.Emit(path, "org.ping.Ping.Pong", "PONG")
 		case "org.ping.Ping.Pong":
 			// incoming ping reply
 			log.Println("PONG from", s.Sender)
