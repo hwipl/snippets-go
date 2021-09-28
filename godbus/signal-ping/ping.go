@@ -7,9 +7,11 @@ import (
 )
 
 const (
-	// object path, interface
+	// object path, interface, ping and pong members
 	path  = "/org/ping/Ping"
 	iface = "org.ping.Ping"
+	ping  = iface + ".Ping"
+	pong  = iface + ".Pong"
 )
 
 func main() {
@@ -33,7 +35,7 @@ func main() {
 	conn.Signal(c)
 
 	// send ping request
-	conn.Emit(path, "org.ping.Ping.Ping", "PING")
+	conn.Emit(path, ping, "PING")
 
 	// handle incoming signals
 	name := conn.Names()[0]
@@ -44,11 +46,11 @@ func main() {
 		}
 
 		switch s.Name {
-		case "org.ping.Ping.Ping":
+		case ping:
 			// incoming ping request
 			log.Println("PING from", s.Sender)
-			conn.Emit(path, "org.ping.Ping.Pong", "PONG")
-		case "org.ping.Ping.Pong":
+			conn.Emit(path, pong, "PONG")
+		case pong:
 			// incoming ping reply
 			log.Println("PONG from", s.Sender)
 		}
