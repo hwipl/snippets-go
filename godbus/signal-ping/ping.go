@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	// object path
+	// object path, interface
 	path  = "/org/ping/Ping"
+	iface = "org.ping.Ping"
 )
 
 func main() {
@@ -22,7 +23,7 @@ func main() {
 	// subscribe to specific signals
 	if err = conn.AddMatchSignal(
 		dbus.WithMatchObjectPath(path),
-		dbus.WithMatchInterface("org.ping.Ping"),
+		dbus.WithMatchInterface(iface),
 	); err != nil {
 		log.Fatal(err)
 	}
