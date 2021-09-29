@@ -7,8 +7,9 @@ import (
 )
 
 const (
-	// object path
-	path = "/org/ping/Ping"
+	// object path, interface
+	path  = "/org/ping/Ping"
+	iface = "org.ping.Ping"
 )
 
 // define ping interface methods
@@ -28,19 +29,18 @@ func main() {
 	defer conn.Close()
 
 	// export ping interface methods
-	conn.Export(ping{}, path, "org.ping.Ping")
+	conn.Export(ping{}, path, iface)
 
 	// request name
-	reply, err := conn.RequestName("org.ping.Ping",
-		dbus.NameFlagDoNotQueue)
+	reply, err := conn.RequestName(iface, dbus.NameFlagDoNotQueue)
 	if err != nil {
 		log.Fatal(err)
 	}
 	if reply != dbus.RequestNameReplyPrimaryOwner {
 		// name already taken, send ping request to it
 		s := ""
-		err := conn.Object("org.ping.Ping",
-			path).Call("org.ping.Ping.Ping", 0).Store(&s)
+		err := conn.Object(iface, path).Call("org.ping.Ping.Ping",
+			0).Store(&s)
 		if err != nil {
 			log.Fatal(err)
 		}
