@@ -7,9 +7,10 @@ import (
 )
 
 const (
-	// object path, interface
-	path  = "/org/ping/Ping"
-	iface = "org.ping.Ping"
+	// object path, interface, ping member
+	path       = "/org/ping/Ping"
+	iface      = "org.ping.Ping"
+	pingMethod = iface + ".Ping"
 )
 
 // define ping interface methods
@@ -39,8 +40,7 @@ func main() {
 	if reply != dbus.RequestNameReplyPrimaryOwner {
 		// name already taken, send ping request to it
 		s := ""
-		err := conn.Object(iface, path).Call("org.ping.Ping.Ping",
-			0).Store(&s)
+		err := conn.Object(iface, path).Call(pingMethod, 0).Store(&s)
 		if err != nil {
 			log.Fatal(err)
 		}
