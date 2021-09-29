@@ -6,6 +6,11 @@ import (
 	"github.com/godbus/dbus/v5"
 )
 
+const (
+	// object path
+	path = "/org/ping/Ping"
+)
+
 // define ping interface methods
 type ping struct{}
 
@@ -23,7 +28,7 @@ func main() {
 	defer conn.Close()
 
 	// export ping interface methods
-	conn.Export(ping{}, "/org/ping/Ping", "org.ping.Ping")
+	conn.Export(ping{}, path, "org.ping.Ping")
 
 	// request name
 	reply, err := conn.RequestName("org.ping.Ping",
@@ -35,8 +40,7 @@ func main() {
 		// name already taken, send ping request to it
 		s := ""
 		err := conn.Object("org.ping.Ping",
-			"/org/ping/Ping").Call("org.ping.Ping.Ping",
-			0).Store(&s)
+			path).Call("org.ping.Ping.Ping", 0).Store(&s)
 		if err != nil {
 			log.Fatal(err)
 		}
