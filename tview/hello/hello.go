@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"time"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
@@ -33,8 +35,20 @@ func main() {
 		SetBorderAttributes(tcell.AttrBold).
 		SetTitle("[::b] Hello Right Top ").
 		SetTitleColor(tcell.ColorBlue)
-	right_bottom := tview.NewBox().
-		SetBorder(true).
+	right_bottom := tview.NewTextView().
+		SetChangedFunc(func() {
+			app.Draw()
+		})
+	go func() {
+		for {
+			for _, letter := range []string{"H", "e", "l", "l", "o"} {
+				fmt.Fprintf(right_bottom, "%s", letter)
+				time.Sleep(time.Second)
+			}
+			right_bottom.SetText("")
+		}
+	}()
+	right_bottom.SetBorder(true).
 		SetBorderColor(tcell.ColorBlue).
 		SetBorderAttributes(tcell.AttrBold).
 		SetTitle("[::b] Hello Right Bottom ").
