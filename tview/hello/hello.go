@@ -22,8 +22,13 @@ func main() {
 		SetBorderAttributes(tcell.AttrBold).
 		SetTitle("[::b] Hello Left ").
 		SetTitleColor(tcell.ColorBlue)
-	right_top := tview.NewBox().
-		SetBorder(true).
+	right_top := tview.NewTextView().
+		SetText("Hello Hello Hello Hello Hello\n" +
+			"Hello Hello Hello Hello Hello\n" +
+			"Hello Hello Hello Hello Hello\n" +
+			"Hello Hello Hello Hello Hello\n" +
+			"Hello Hello Hello Hello Hello\n")
+	right_top.SetBorder(true).
 		SetBorderColor(tcell.ColorBlue).
 		SetBorderAttributes(tcell.AttrBold).
 		SetTitle("[::b] Hello Right Top ").
