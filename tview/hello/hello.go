@@ -10,7 +10,10 @@ import (
 )
 
 func main() {
+	// create application
 	app := tview.NewApplication()
+
+	// create list for left side
 	left := tview.NewList().
 		AddItem("Hello 1", "Hello", 'a', nil).
 		AddItem("Hello 2", "Hello", 'b', nil).
@@ -24,6 +27,8 @@ func main() {
 		SetBorderAttributes(tcell.AttrBold).
 		SetTitle("[::b] Hello Left ").
 		SetTitleColor(tcell.ColorBlue)
+
+	// create text view for top right side
 	right_top := tview.NewTextView().
 		SetText("Hello Hello Hello Hello Hello\n" +
 			"Hello Hello Hello Hello Hello\n" +
@@ -35,6 +40,8 @@ func main() {
 		SetBorderAttributes(tcell.AttrBold).
 		SetTitle("[::b] Hello Right Top ").
 		SetTitleColor(tcell.ColorBlue)
+
+	// create periodically updated text view for bottom right side
 	right_bottom := tview.NewTextView().
 		SetChangedFunc(func() {
 			app.Draw()
@@ -53,11 +60,15 @@ func main() {
 		SetBorderAttributes(tcell.AttrBold).
 		SetTitle("[::b] Hello Right Bottom ").
 		SetTitleColor(tcell.ColorBlue)
+
+	// create flex box that contains everything
 	flex := tview.NewFlex().
 		AddItem(left, 0, 1, true).
 		AddItem(tview.NewFlex().SetDirection(tview.FlexRow).
 			AddItem(right_top, 0, 3, false).
 			AddItem(right_bottom, 0, 1, false), 0, 2, false)
+
+	// run everything
 	if err := app.SetRoot(flex, true).SetFocus(flex).Run(); err != nil {
 		log.Fatal(err)
 	}
