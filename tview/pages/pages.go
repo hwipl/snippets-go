@@ -23,10 +23,19 @@ func main() {
 		boxes = append(boxes, box)
 	}
 
-	// create pages and put boxes in it
+	// add frames and put boxes in them
+	frames := []*tview.Frame{}
+	for i := 0; i < numPages; i++ {
+		frame := tview.NewFrame(boxes[i]).
+			AddText(fmt.Sprintf("Frame %d", i+1), true,
+				tview.AlignCenter, tcell.ColorWhite)
+		frames = append(frames, frame)
+	}
+
+	// create pages and put frames in it
 	pages := tview.NewPages()
 	for i := numPages - 1; i >= 0; i-- {
-		pages.AddPage(fmt.Sprintf("box %d", i+1), boxes[i], true, true)
+		pages.AddPage(fmt.Sprintf("box %d", i+1), frames[i], true, true)
 	}
 
 	// handle user input
