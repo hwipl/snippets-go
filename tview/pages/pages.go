@@ -1,26 +1,33 @@
 package main
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
+const numPages = 16
+
 func main() {
 	// create application
 	app := tview.NewApplication()
 
 	// create boxes
-	box1 := tview.NewBox().SetBorder(true).SetTitle("Box 1")
-	box2 := tview.NewBox().SetBorder(true).SetTitle("Box 2")
-	box3 := tview.NewBox().SetBorder(true).SetTitle("Box 3")
+	boxes := []*tview.Box{}
+	for i := 0; i < numPages; i++ {
+		box := tview.NewBox().
+			SetBorder(true).
+			SetTitle(fmt.Sprintf(" Box %d ", i+1))
+		boxes = append(boxes, box)
+	}
 
 	// create pages and put boxes in it
-	pages := tview.NewPages().
-		AddPage("box 3", box3, true, true).
-		AddPage("box 2", box2, true, true).
-		AddPage("box 1", box1, true, true)
+	pages := tview.NewPages()
+	for i := numPages - 1; i >= 0; i-- {
+		pages.AddPage(fmt.Sprintf("box %d", i+1), boxes[i], true, true)
+	}
 
 	// handle user input
 	app.SetInputCapture(func(event *tcell.EventKey) *tcell.EventKey {
