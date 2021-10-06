@@ -19,6 +19,7 @@ func main() {
 	for i := 0; i < numPages; i++ {
 		box := tview.NewBox().
 			SetBorder(true).
+			SetBorderColor(tcell.PaletteColor(i + 1)).
 			SetTitle(fmt.Sprintf(" Box %d ", i+1))
 		boxes = append(boxes, box)
 	}
