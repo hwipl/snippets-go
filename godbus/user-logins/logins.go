@@ -1,3 +1,10 @@
+// List currently logged in users and show new logins and logouts.
+// Based on:
+// https://www.freedesktop.org/wiki/Software/systemd/logind/
+// and
+// $ gdbus introspect --system --dest org.freedesktop.login1 \
+//     --object-path /org/freedesktop/login1
+
 package main
 
 import (
@@ -29,7 +36,9 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer conn.Close()
+	defer func() {
+		_ = conn.Close()
+	}()
 
 	// subscribe to login signals
 	if err = conn.AddMatchSignal(
@@ -54,11 +63,7 @@ func main() {
 			user.UID)
 	}
 
-	// handle login signals, based on:
-	// https://www.freedesktop.org/wiki/Software/systemd/logind/
-	// and
-	// $ gdbus introspect --system --dest org.freedesktop.login1 \
-	//     --object-path /org/freedesktop/login1
+	// handle login signals
 	for s := range c {
 		switch s.Name {
 		case userNew:
