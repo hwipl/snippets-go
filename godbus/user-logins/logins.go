@@ -7,12 +7,21 @@ import (
 )
 
 const (
-	// object path, interface
+	// object path, interface, signals/methods
 	path        = "/org/freedesktop/login1"
-	iface       = "org.freedesktop.login1.Manager"
+	dest        = "org.freedesktop.login1"
+	iface       = dest + ".Manager"
 	userNew     = iface + ".UserNew"
 	userRemoved = iface + ".UserRemoved"
+	listUsers   = iface + ".ListUsers"
 )
+
+// User is a currently logged in user
+type User struct {
+	UID  uint32
+	Name string
+	Path dbus.ObjectPath
+}
 
 func main() {
 	// connect to system bus
@@ -33,6 +42,17 @@ func main() {
 	// create channel for signals
 	c := make(chan *dbus.Signal, 10)
 	conn.Signal(c)
+
+	// request currently logged in users
+	var users []User
+	err = conn.Object(dest, path).Call(listUsers, 0).Store(&users)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, user := range users {
+		log.Printf("Currently logged in user: %s (uid: %d)", user.Name,
+			user.UID)
+	}
 
 	// handle login signals, based on:
 	// https://www.freedesktop.org/wiki/Software/systemd/logind/
