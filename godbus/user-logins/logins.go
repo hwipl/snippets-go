@@ -59,8 +59,8 @@ func main() {
 		log.Fatal(err)
 	}
 	for _, user := range users {
-		log.Printf("Currently logged in user: %s (uid: %d)", user.Name,
-			user.UID)
+		log.Printf("Currently logged in user: %d (name: \"%s\")",
+			user.UID, user.Name)
 	}
 
 	// handle login signals
