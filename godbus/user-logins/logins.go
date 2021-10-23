@@ -30,6 +30,20 @@ type User struct {
 	Path dbus.ObjectPath
 }
 
+// parseUserSignal parses a UserNew or UserRemoved signal and returns the uid
+// and object path
+func parseUserSignal(s *dbus.Signal) (uint32, dbus.ObjectPath) {
+	uid, ok := s.Body[0].(uint32)
+	if !ok {
+		log.Fatal("error parsing uid in user signal")
+	}
+	path, ok := s.Body[1].(dbus.ObjectPath)
+	if !ok {
+		log.Fatal("error parsing object path user signal")
+	}
+	return uid, path
+}
+
 func main() {
 	// connect to system bus
 	conn, err := dbus.ConnectSystemBus()
@@ -68,10 +82,12 @@ func main() {
 		switch s.Name {
 		case userNew:
 			// handle user new signal
-			log.Println("User new with uid:", s.Body[0])
+			uid, _ := parseUserSignal(s)
+			log.Printf("User login: %d", uid)
 		case userRemoved:
 			// handle user removed signal
-			log.Println("User removed with uid:", s.Body[0])
+			uid, _ := parseUserSignal(s)
+			log.Printf("User logout: %d", uid)
 		}
 	}
 }
