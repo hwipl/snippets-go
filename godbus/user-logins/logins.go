@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	// object path, interface, signals/methods
+	// object path, destination, interface, signals, methods
 	path        = "/org/freedesktop/login1"
 	dest        = "org.freedesktop.login1"
 	iface       = dest + ".Manager"
