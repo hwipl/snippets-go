@@ -4,6 +4,9 @@
 // and
 // $ gdbus introspect --system --dest org.freedesktop.login1 \
 //     --object-path /org/freedesktop/login1
+// and
+// $ gdbus introspect --system --dest org.freedesktop.login1 \
+//     --object-path /org/freedesktop/login1/user/_1000
 
 package main
 
@@ -14,13 +17,14 @@ import (
 )
 
 const (
-	// object path, destination, interface, signals, methods
+	// object path, destination, interface, signals, methods, properties
 	path        = "/org/freedesktop/login1"
 	dest        = "org.freedesktop.login1"
 	iface       = dest + ".Manager"
 	userNew     = iface + ".UserNew"
 	userRemoved = iface + ".UserRemoved"
 	listUsers   = iface + ".ListUsers"
+	userName    = dest + ".User.Name"
 )
 
 // User is a currently logged in user
@@ -82,8 +86,13 @@ func main() {
 		switch s.Name {
 		case userNew:
 			// handle user new signal
-			uid, _ := parseUserSignal(s)
-			log.Printf("User login: %d", uid)
+			uid, userPath := parseUserSignal(s)
+			name, err := conn.Object(dest, userPath).
+				GetProperty(userName)
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Printf("User login: %d (name: %s)", uid, name)
 		case userRemoved:
 			// handle user removed signal
 			uid, _ := parseUserSignal(s)
