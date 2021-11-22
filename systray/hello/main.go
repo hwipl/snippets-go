@@ -2,9 +2,9 @@ package main
 
 import (
 	"log"
+	"time"
 
 	"github.com/getlantern/systray"
-	"github.com/getlantern/systray/example/icon"
 )
 
 // onExit is executed when systray is exited
@@ -17,7 +17,7 @@ func onReady() {
 	log.Println("Hello.")
 
 	// set icon, title and tooltip
-	systray.SetIcon(icon.Data)
+	systray.SetIcon(icon1)
 	systray.SetTitle("Hello")
 	systray.SetTooltip("Hello, there.")
 
@@ -38,6 +38,21 @@ func onReady() {
 	go func() {
 		<-mBye.ClickedCh
 		systray.Quit()
+	}()
+
+	// add periodic icon changing
+	go func() {
+		visible1 := true
+		for {
+			<-time.NewTimer(time.Second).C
+			if visible1 {
+				systray.SetIcon(icon2)
+				visible1 = false
+			} else {
+				systray.SetIcon(icon1)
+				visible1 = true
+			}
+		}
 	}()
 }
 
