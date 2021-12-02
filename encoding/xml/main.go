@@ -38,7 +38,7 @@ func main() {
 	}
 	log.Println("decode:", decode)
 
-	// check if encoded and decaded data are equal
+	// check if encoded and decoded data are equal
 	if encode == decode {
 		log.Println("encode == decode")
 	}
