@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"path/filepath"
 )
 
 func main() {
@@ -18,4 +19,11 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Println("test ->", link)
+
+	// read and evaluate symlink
+	linkEval, err := filepath.EvalSymlinks("test")
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("test ->", linkEval)
 }
