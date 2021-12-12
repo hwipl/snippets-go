@@ -58,7 +58,7 @@ func main() {
 	// create and send message
 	msg := &dns.Msg{}
 	msg.SetQuestion(dns.Fqdn(name), typ)
-	r, err := dns.Exchange(msg, "8.8.8.8:53")
+	r, err := dns.Exchange(msg, server)
 	if err != nil {
 		log.Fatal(err)
 	}
