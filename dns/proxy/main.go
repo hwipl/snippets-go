@@ -40,7 +40,6 @@ func parseCommandLine() {
 
 func handleRequest(w dns.ResponseWriter, r *dns.Msg) {
 	// log request
-	//log.Println(r)
 	for _, q := range r.Question {
 		log.Println("Question:", q)
 	}
@@ -52,7 +51,6 @@ func handleRequest(w dns.ResponseWriter, r *dns.Msg) {
 	}
 
 	// log reply
-	//log.Println(r)
 	for _, a := range r.Answer {
 		log.Println("Answer:", a)
 	}
