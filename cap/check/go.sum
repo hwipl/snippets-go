@@ -1,0 +1,4 @@
+kernel.org/pub/linux/libs/security/libcap/cap v1.2.62 h1:9iE7a676uhvcBUqPaX1m8vsGPLxWhY6HacTae4fAZ4M=
+kernel.org/pub/linux/libs/security/libcap/cap v1.2.62/go.mod h1:IZIlNB3lc6EmaOILJvTigHdE+vE5DrVDEEm6CB133Ak=
+kernel.org/pub/linux/libs/security/libcap/psx v1.2.62 h1:Tko+77IH7RReA/jcHqaVgtUJ9zAaXH4I0ZE3YHluBdw=
+kernel.org/pub/linux/libs/security/libcap/psx v1.2.62/go.mod h1:+l6Ee2F59XiJ2I6WR5ObpC1utCQJZ/VLsEbQCD8RG24=
