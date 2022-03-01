@@ -7,4 +7,5 @@ require (
 	github.com/libp2p/go-libp2p-core v0.8.0
 	github.com/libp2p/go-libp2p-peerstore v0.2.6
 	github.com/multiformats/go-multiaddr v0.3.1
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
