@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/beeep/hello
 
-go 1.17
+go 1.18
 
 require github.com/gen2brain/beeep v0.0.0-20210529141713-5586760f0cc1
 
