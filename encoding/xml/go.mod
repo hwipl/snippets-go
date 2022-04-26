@@ -1,3 +1,3 @@
 module github.com/hwipl/snippets-go/encoding/xml
 
-go 1.17
+go 1.18
