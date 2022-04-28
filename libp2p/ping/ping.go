@@ -20,7 +20,7 @@ import (
 	"github.com/libp2p/go-libp2p-core/host"
 	"github.com/libp2p/go-libp2p-core/network"
 	"github.com/libp2p/go-libp2p-core/peer"
-	peerstore "github.com/libp2p/go-libp2p-peerstore"
+	"github.com/libp2p/go-libp2p-core/peerstore"
 	multiaddr "github.com/multiformats/go-multiaddr"
 )
 
@@ -53,10 +53,10 @@ func helloWorldHandler(s network.Stream) {
 }
 
 // initNode initializes this node
-func initNode(ctx context.Context) host.Host {
+func initNode() host.Host {
 	// start a libp2p node that listens on a random local TCP port
-	node, err := libp2p.New(ctx,
-		libp2p.ListenAddrStrings("/ip4/127.0.0.1/tcp/0"))
+	node, err :=
+		libp2p.New(libp2p.ListenAddrStrings("/ip4/127.0.0.1/tcp/0"))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -77,11 +77,8 @@ func initNode(ctx context.Context) host.Host {
 
 // listen simply waits for incoming streams until interrupted
 func listen() {
-	// create a background context (i.e. one that never cancels)
-	ctx := context.Background()
-
 	// initialize node
-	node := initNode(ctx)
+	node := initNode()
 
 	// wait for a SIGINT or SIGTERM signal
 	ch := make(chan os.Signal, 1)
@@ -102,7 +99,7 @@ func connect(addr multiaddr.Multiaddr) {
 	ctx := context.Background()
 
 	// initialize node
-	node := initNode(ctx)
+	node := initNode()
 
 	// parse peer multiaddress
 	peerInfo, err := peer.AddrInfoFromP2pAddr(addr)
