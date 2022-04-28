@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/libnetwork/resolvconf
 
-go 1.17
+go 1.18
 
 require github.com/moby/libnetwork v0.5.6
 
