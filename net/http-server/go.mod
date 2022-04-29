@@ -1,3 +1,3 @@
 module github.com/hwipl/snippets-go/net/http-server
 
-go 1.17
+go 1.18
