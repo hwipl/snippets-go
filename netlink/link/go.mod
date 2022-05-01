@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/netlink/link
 
-go 1.17
+go 1.18
 
 require (
 	github.com/vishvananda/netlink v1.1.0
