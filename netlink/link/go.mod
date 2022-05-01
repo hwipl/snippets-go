@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/vishvananda/netlink v1.1.0
-	golang.org/x/sys v0.0.0-20190606203320-7fc4e5ec1444
+	golang.org/x/sys v0.0.0-20220429233432-b5fbb4746d32
 )
 
-require github.com/vishvananda/netns v0.0.0-20191106174202-0a2b9b5464df // indirect
+require github.com/vishvananda/netns v0.0.0-20211101163701-50045581ed74 // indirect
