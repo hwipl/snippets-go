@@ -8,6 +8,8 @@ require (
 	github.com/multiformats/go-multiaddr v0.5.0
 )
 
+require gopkg.in/yaml.v3 v3.0.0 // indirect; security alert
+
 require (
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
