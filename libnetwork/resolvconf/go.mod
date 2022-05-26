@@ -4,6 +4,8 @@ go 1.18
 
 require github.com/moby/libnetwork v0.5.6
 
+require gopkg.in/yaml.v3 v3.0.0 // indirect; security alert
+
 require (
 	github.com/Sirupsen/logrus v1.0.6 // indirect
 	github.com/docker/docker v20.10.16+incompatible // indirect
