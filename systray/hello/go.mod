@@ -4,7 +4,7 @@ go 1.18
 
 require github.com/getlantern/systray v1.2.1
 
-require gopkg.in/yaml.v3 v3.0.0 // indirect; indirect, security alert
+require gopkg.in/yaml.v3 v3.0.0 // indirect; security alert
 
 require (
 	github.com/getlantern/context v0.0.0-20220418194847-3d5e7a086201 // indirect
