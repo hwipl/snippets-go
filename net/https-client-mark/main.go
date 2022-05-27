@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	// create dialer
+	// mark to be set with SO_MARK socket option
 	mark := 42
 
 	// set socket option function
