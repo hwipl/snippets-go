@@ -14,23 +14,23 @@ func main() {
 	// mark to be set with SO_MARK socket option
 	mark := 42
 
-	// set socket option function
-	var soerr error
-	setsockopt := func(fd uintptr) {
-		log.Println("Setting SO_MARK to", mark)
-		soerr = unix.SetsockoptInt(
-			int(fd),
-			unix.SOL_SOCKET,
-			unix.SO_MARK,
-			mark,
-		)
-		if soerr != nil {
-			log.Println("error setting SO_MARK:", soerr)
-		}
-	}
-
 	// control function that sets socket option on raw connection
 	control := func(network, address string, c syscall.RawConn) error {
+		// set socket option function
+		var soerr error
+		setsockopt := func(fd uintptr) {
+			log.Println("Setting SO_MARK to", mark)
+			soerr = unix.SetsockoptInt(
+				int(fd),
+				unix.SOL_SOCKET,
+				unix.SO_MARK,
+				mark,
+			)
+			if soerr != nil {
+				log.Println("error setting SO_MARK:", soerr)
+			}
+		}
+
 		if err := c.Control(setsockopt); err != nil {
 			return err
 		}
