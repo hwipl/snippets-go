@@ -7,6 +7,8 @@ require (
 	github.com/multiformats/go-multiaddr v0.8.0
 )
 
+require github.com/gin-gonic/gin v1.7.7 // indirect; security alert
+
 require (
 	github.com/benbjohnson/clock v1.3.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
