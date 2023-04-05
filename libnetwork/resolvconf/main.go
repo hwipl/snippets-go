@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 
-	"github.com/moby/libnetwork/resolvconf"
+	"github.com/docker/docker/libnetwork/resolvconf"
 )
 
 func main() {
@@ -14,7 +14,7 @@ func main() {
 	}
 
 	// get nameservers
-	for _, ns := range resolvconf.GetNameservers(r.Content) {
+	for _, ns := range resolvconf.GetNameservers(r.Content, resolvconf.IP) {
 		log.Println("Nameserver:", ns)
 	}
 
