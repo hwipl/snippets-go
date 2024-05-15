@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/fsnotify/tmp
 
-go 1.18
+go 1.22
 
 require github.com/fsnotify/fsnotify v1.5.3
 
