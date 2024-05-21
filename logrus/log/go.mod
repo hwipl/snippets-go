@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/logrus/log
 
-go 1.18
+go 1.22
 
 require github.com/sirupsen/logrus v1.8.1
 
