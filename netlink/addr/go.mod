@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/netlink/addr
 
-go 1.18
+go 1.22
 
 require github.com/vishvananda/netlink v1.1.0
 
