@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/systray/hello
 
-go 1.18
+go 1.22
 
 require github.com/getlantern/systray v1.2.1
 
