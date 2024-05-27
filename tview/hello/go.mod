@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/tview/hello
 
-go 1.18
+go 1.22
 
 require (
 	github.com/gdamore/tcell/v2 v2.6.0
