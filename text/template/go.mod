@@ -1,3 +1,3 @@
 module github.com/hwipl/snippets-go/text/template
 
-go 1.18
+go 1.22
