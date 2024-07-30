@@ -20,7 +20,7 @@ func main() {
 	}
 
 	// get nameservers in CIDR notation
-	for _, ns := range resolvconf.GetNameserversAsCIDR(r.Content) {
+	for _, ns := range resolvconf.GetNameserversAsPrefix(r.Content) {
 		log.Println("Nameserver (CIDR):", ns)
 	}
 
