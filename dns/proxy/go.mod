@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/dns/proxy
 
-go 1.22
+go 1.23.0
 
 require github.com/miekg/dns v1.1.59
 
