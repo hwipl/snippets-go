@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/libnetwork/resolvconf
 
-go 1.22
+go 1.23.0
 
 require github.com/docker/docker v27.1.1+incompatible
 
