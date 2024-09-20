@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/tview/pages
 
-go 1.22
+go 1.23.0
 
 require (
 	github.com/gdamore/tcell/v2 v2.7.4
