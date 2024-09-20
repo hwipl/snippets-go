@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/zerolog/log
 
-go 1.22
+go 1.23.0
 
 require github.com/rs/zerolog v1.33.0
 
