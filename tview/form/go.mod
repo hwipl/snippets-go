@@ -1,6 +1,6 @@
 module github.com/hwipl/snippets-go/tview/form
 
-go 1.22
+go 1.23.0
 
 require github.com/rivo/tview v0.0.0-20240524063012-037df494fb76
 
