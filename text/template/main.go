@@ -26,16 +26,16 @@ func main() {
 	}
 
 	docs := []doc{
-		doc{
+		{
 			Title:    "test document",
 			Abstract: "this is a test document",
 			Topics:   []string{"test", "document"},
 		},
-		doc{
+		{
 			Title:  "Another test document",
 			Topics: []string{"another", "test", "document"},
 		},
-		doc{
+		{
 			Title:    "Yet another test document",
 			Abstract: "this is yet another test document",
 		},
