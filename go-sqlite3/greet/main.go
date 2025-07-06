@@ -12,6 +12,41 @@ import (
 // dbFile is the name of the db file.
 const dbFile = "./greet.db"
 
+// addGreetings adds greetings to db with IDs starting from 0.
+func addGreetings(db *sql.DB, greetings []string) {
+	// fill db
+	tx, err := db.Begin()
+	if err != nil {
+		log.Fatal(err)
+	}
+	stmt, err := tx.Prepare("insert into greetings(id, greeting) values(?, ?)")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer stmt.Close()
+
+	for i, g := range greetings {
+		_, err = stmt.Exec(i, g)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	err = tx.Commit()
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// addGreeting adds a greeting with an ID to db.
+func addGreeting(db *sql.DB, id int, greeting string) {
+	_, err := db.Exec(fmt.Sprintf(
+		"insert into greetings(id, greeting) values(%d, '%s')",
+		id, greeting))
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
 // list lists all entries in db.
 func list(db *sql.DB) {
 	rows, err := db.Query("select id, greeting from greetings")
@@ -72,16 +107,6 @@ func deleteAll(db *sql.DB) {
 	}
 }
 
-// addGreeting adds a greeting with an ID to db.
-func addGreeting(db *sql.DB, id int, greeting string) {
-	_, err := db.Exec(fmt.Sprintf(
-		"insert into greetings(id, greeting) values(%d, '%s')",
-		id, greeting))
-	if err != nil {
-		log.Fatal(err)
-	}
-}
-
 func main() {
 	// remove existing db file
 	os.Remove(dbFile)
@@ -103,33 +128,12 @@ func main() {
 		return
 	}
 
-	// fill db
-	tx, err := db.Begin()
-	if err != nil {
-		log.Fatal(err)
-	}
-	stmt, err := tx.Prepare("insert into greetings(id, greeting) values(?, ?)")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer stmt.Close()
-
-	for i, g := range []string{
+	addGreetings(db, []string{
 		"hello",
 		"hi",
 		"good day",
 		"greetings",
-	} {
-		_, err = stmt.Exec(i, g)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-	err = tx.Commit()
-	if err != nil {
-		log.Fatal(err)
-	}
-
+	})
 	list(db)
 	getID(db, "good day")
 	getGreeting(db, 2)
