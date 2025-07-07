@@ -23,7 +23,7 @@ func addGreetings(db *sql.DB, greetings []string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer stmt.Close()
+	defer func() { _ = stmt.Close() }()
 
 	for i, g := range greetings {
 		_, err = stmt.Exec(i, g)
@@ -53,7 +53,7 @@ func list(db *sql.DB) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 	for rows.Next() {
 		var id int
 		var greeting string
@@ -75,7 +75,7 @@ func getID(db *sql.DB, greeting string) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer stmt.Close()
+	defer func() { _ = stmt.Close() }()
 	var id int
 	err = stmt.QueryRow(greeting).Scan(&id)
 	if err != nil {
@@ -90,7 +90,7 @@ func getGreeting(db *sql.DB, id int) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer stmt.Close()
+	defer func() { _ = stmt.Close() }()
 	var greeting string
 	err = stmt.QueryRow(id).Scan(&greeting)
 	if err != nil {
@@ -109,14 +109,14 @@ func deleteAll(db *sql.DB) {
 
 func main() {
 	// remove existing db file
-	os.Remove(dbFile)
+	_ = os.Remove(dbFile)
 
 	// create fresh db
 	db, err := sql.Open("sqlite3", dbFile)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer db.Close()
+	defer func() { _ = db.Close() }()
 
 	sqlStmt := `
 	create table greetings (id integer not null primary key, greeting text);
