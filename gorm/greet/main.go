@@ -65,7 +65,7 @@ func main() {
 	}
 
 	// migrate schema
-	db.AutoMigrate(&Greeting{})
+	_ = db.AutoMigrate(&Greeting{})
 
 	// create
 	db.Create(&Greeting{Greeting: "hello"})
