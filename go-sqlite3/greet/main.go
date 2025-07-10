@@ -4,13 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"os"
 
 	_ "github.com/mattn/go-sqlite3"
 )
-
-// dbFile is the name of the db file.
-const dbFile = "./greet.db"
 
 // addGreetings adds greetings to db with IDs starting from 0.
 func addGreetings(db *sql.DB, greetings []string) {
@@ -108,11 +104,8 @@ func deleteAll(db *sql.DB) {
 }
 
 func main() {
-	// remove existing db file
-	_ = os.Remove(dbFile)
-
-	// create fresh db
-	db, err := sql.Open("sqlite3", dbFile)
+	// create db
+	db, err := sql.Open("sqlite3", "file:greet.db?mode=memory")
 	if err != nil {
 		log.Fatal(err)
 	}
