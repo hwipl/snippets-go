@@ -3,14 +3,10 @@ package main
 import (
 	"fmt"
 	"log"
-	"os"
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
-
-// dbFile is the db file.
-const dbFile = "./greetings.db"
 
 // Greeting is a greeting
 type Greeting struct {
@@ -56,10 +52,8 @@ func deleteID(db *gorm.DB, id int) {
 }
 
 func main() {
-	_ = os.Remove(dbFile)
-
 	// open db
-	db, err := gorm.Open(sqlite.Open(dbFile), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open("file:greet.db?mode=memory"), &gorm.Config{})
 	if err != nil {
 		log.Panic("failed to connect database")
 	}
