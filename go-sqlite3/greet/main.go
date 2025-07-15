@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"flag"
 	"fmt"
 	"log"
 
@@ -22,7 +23,7 @@ func addGreetings(db *sql.DB, greetings []string) {
 	defer func() { _ = stmt.Close() }()
 
 	for i, g := range greetings {
-		_, err = stmt.Exec(i, g)
+		_, err = stmt.Exec(i+1, g)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -121,17 +122,41 @@ func main() {
 		return
 	}
 
+	// fill db
 	addGreetings(db, []string{
 		"hello",
 		"hi",
 		"good day",
 		"greetings",
 	})
-	list(db)
-	getID(db, "good day")
-	getGreeting(db, 2)
-	deleteAll(db)
-	list(db)
-	addGreeting(db, 23, "bye")
-	list(db)
+
+	// command line arguments
+	r := flag.Bool("run", false, "run some commands for testing")
+	l := flag.Bool("list", false, "list greetings")
+	i := flag.String("id", "", "get ID of greeting")
+	g := flag.Int("greeting", 0, "get greeting with `id`")
+	flag.Parse()
+
+	if *r {
+		list(db)
+		getID(db, "good day")
+		getGreeting(db, 2)
+		deleteAll(db)
+		list(db)
+		addGreeting(db, 23, "bye")
+		list(db)
+	}
+
+	if *l {
+		list(db)
+		return
+	}
+	if *i != "" {
+		getID(db, *i)
+		return
+	}
+	if *g != 0 {
+		getGreeting(db, *g)
+		return
+	}
 }
