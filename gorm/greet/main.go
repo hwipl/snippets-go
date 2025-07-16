@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 
@@ -61,21 +62,45 @@ func main() {
 	// migrate schema
 	_ = db.AutoMigrate(&Greeting{})
 
-	// create
-	db.Create(&Greeting{Greeting: "hello"})
+	// create entries
+	for _, g := range []string{"hello", "hi", "good day", "greetings"} {
+		db.Create(&Greeting{Greeting: g})
+	}
 
-	// list
-	list(db)
+	// command line arguments
+	r := flag.Bool("run", false, "run some commands for testing")
+	l := flag.Bool("list", false, "list greetings")
+	i := flag.Int("id", 0, "get greeting by `id`")
+	g := flag.String("greeting", "", "get greeting")
+	flag.Parse()
 
-	// read
-	getID(db, 1)
-	getGreeting(db, "hello")
+	if *r {
+		// list
+		list(db)
 
-	// update
-	updateGreeting(db, 1, "hi")
-	getID(db, 1)
+		// read
+		getID(db, 1)
+		getGreeting(db, "hello")
 
-	// delete
-	deleteID(db, 1)
-	list(db)
+		// update
+		updateGreeting(db, 1, "hi")
+		getID(db, 1)
+
+		// delete
+		deleteID(db, 1)
+		list(db)
+	}
+
+	if *l {
+		list(db)
+		return
+	}
+	if *i != 0 {
+		getID(db, *i)
+		return
+	}
+	if *g != "" {
+		getGreeting(db, *g)
+		return
+	}
 }
