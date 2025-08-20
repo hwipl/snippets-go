@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"log"
 
+	_ "crypto/sha256"
+
 	"github.com/docker/docker/libnetwork/resolvconf"
 )
 
