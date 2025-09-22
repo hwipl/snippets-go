@@ -9,6 +9,8 @@ import (
 
 // handleClient handles a client connection to the server.
 func handleClient(conn net.Conn) {
+	defer func() { _ = conn.Close() }()
+
 	log.Println("Server handling new client connection:", conn.RemoteAddr())
 	if _, err := io.Copy(conn, conn); err != nil {
 		log.Fatal(err)
@@ -19,6 +21,8 @@ func handleClient(conn net.Conn) {
 
 // runServer runs the tcp server.
 func runServer(listen net.Listener) {
+	defer func() { _ = listen.Close() }()
+
 	log.Println("Server listening on", listen.Addr())
 	for {
 		conn, err := listen.Accept()
@@ -35,6 +39,7 @@ func runClient(addr string) {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer func() { _ = conn.Close() }()
 
 	log.Println("Client connected to server:", conn.RemoteAddr())
 	w := bufio.NewWriter(conn)
