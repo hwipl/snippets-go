@@ -1,0 +1,10 @@
+syntax = "proto3";
+package greeting;
+
+option go_package = "github.com/hwipl/snippets-go/protobuf/greetcp/greetpb";
+
+message Greeting {
+  string from_name = 1;
+  string to_name = 2;
+  string text = 3;
+}
