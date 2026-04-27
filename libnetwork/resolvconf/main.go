@@ -1,12 +1,11 @@
 package main
 
 import (
-	"bytes"
 	"log"
 
 	_ "crypto/sha256"
 
-	"github.com/docker/docker/libnetwork/resolvconf"
+	"github.com/containerd/nerdctl/v2/pkg/resolvconf"
 )
 
 func main() {
@@ -22,7 +21,7 @@ func main() {
 	}
 
 	// get nameservers in CIDR notation
-	for _, ns := range resolvconf.GetNameserversAsPrefix(r.Content) {
+	for _, ns := range resolvconf.GetNameserversAsCIDR(r.Content) {
 		log.Println("Nameserver (CIDR):", ns)
 	}
 
@@ -41,7 +40,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if !bytes.Equal(s.Hash, r.Hash) {
+	if s.Hash != r.Hash {
 		log.Println("resolv.confs are not equal")
 	} else {
 		log.Println("resolv.confs are equal")
